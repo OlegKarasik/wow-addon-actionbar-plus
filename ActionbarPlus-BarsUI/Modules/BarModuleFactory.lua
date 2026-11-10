@@ -26,6 +26,15 @@ local function ResolveLayout(ui)
   return cns:GetLayout(key) or gridLayout
 end
 
+--- @param ui BarUIConfig_ABP_2_0?
+--- @return number
+local function ResolveEffectiveAlpha(ui)
+  if not ui then return 1.0 end
+  if ui.fullAlphaInCombat and InCombatLockdown() then return 1.0 end
+  if ui.fullAlphaWithTarget and UnitExists('target') then return 1.0 end
+  return ui.alpha or 1.0
+end
+
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
@@ -448,13 +457,17 @@ end
 --- @return BarLayout_ABP_2_0
 function o:ResolveLayout(ui) return ResolveLayout(ui) end
 
+--- @param barConf BarConfig_ABP_2_0?
+--- @return number
+function o:GetEffectiveAlpha(barConf) return ResolveEffectiveAlpha(barConf and barConf.ui) end
+
 --- @param frame BarFrame_ABP_2_0
 --- @param barConf BarConfig_ABP_2_0
 function o:ApplyLayout(frame, barConf)
   local ui = barConf.ui
   local layout = ResolveLayout(ui)
   layout:ApplyButtons(frame)
-  frame:SetAlpha(ui.alpha)
+  frame:SetAlpha(ResolveEffectiveAlpha(ui))
   if layout:SupportsBackdrop() then
     frame.widget:ApplyBackdrop()
   else

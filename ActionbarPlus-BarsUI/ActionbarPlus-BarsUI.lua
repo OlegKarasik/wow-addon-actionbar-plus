@@ -42,6 +42,16 @@ local function ResyncAllButtonsEmptyState()
   end)
 end
 
+function o:RefreshAllBarAlpha()
+  self:ForEach(function(bm)
+    local frame = bm and bm.barFrame
+    local conf = bm and bm:c()
+    if frame and conf then
+      frame:SetAlpha(MF:GetEffectiveAlpha(conf))
+    end
+  end)
+end
+
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
@@ -98,12 +108,26 @@ end
 --- @return boolean
 function o:IsQuickKeybindModeActive() return quickKeybindModeActive end
 
+function o:PLAYER_IN_COMBAT_CHANGED() self:RefreshAllBarAlpha() end
+function o:PLAYER_REGEN_DISABLED() self:RefreshAllBarAlpha() end
+function o:PLAYER_REGEN_ENABLED() self:RefreshAllBarAlpha() end
+function o:PLAYER_TARGET_CHANGED() self:RefreshAllBarAlpha() end
+
 function o:OnEnable()
   MF:CreateAddonModules()
+  self:RegisterEvent('PLAYER_IN_COMBAT_CHANGED')
+  self:RegisterEvent('PLAYER_REGEN_DISABLED')
+  self:RegisterEvent('PLAYER_REGEN_ENABLED')
+  self:RegisterEvent('PLAYER_TARGET_CHANGED')
+  self:RefreshAllBarAlpha()
   self:SendMessage(ns:msg('OnEnable'), self)
 end
 
 function o:OnDisable()
+  self:UnregisterEvent('PLAYER_IN_COMBAT_CHANGED')
+  self:UnregisterEvent('PLAYER_REGEN_DISABLED')
+  self:UnregisterEvent('PLAYER_REGEN_ENABLED')
+  self:UnregisterEvent('PLAYER_TARGET_CHANGED')
   self:SendMessage(ns:msg('OnDisable'))
 end
 

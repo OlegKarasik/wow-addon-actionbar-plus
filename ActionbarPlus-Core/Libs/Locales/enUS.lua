@@ -10,6 +10,8 @@ if not L then return end
 L['ActionbarPlus']        = true
 L['AddOns']               = true
 L['Alpha']                = true
+L['Full Alpha in Combat'] = true
+L['Full Alpha with Target'] = true
 L['Backdrop']             = true
 L['Background Color']     = true
 L['Bar']                  = true

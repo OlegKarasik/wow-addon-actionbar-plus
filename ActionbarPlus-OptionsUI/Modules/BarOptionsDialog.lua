@@ -243,6 +243,36 @@ local function AddGeneralTab(tab, window, conf)
   tab:AddChild(slBtnSize)
   refs.slBtnSize = slBtnSize
 
+  --- @type AceGUICheckBox
+  local chkFullAlphaInCombat = AceGUI:Create('CheckBox')
+  chkFullAlphaInCombat:SetLabel(L['Full Alpha in Combat'])
+  chkFullAlphaInCombat:SetRelativeWidth(0.65)
+  chkFullAlphaInCombat:SetValue(conf.ui.fullAlphaInCombat == true)
+  chkFullAlphaInCombat:SetCallback('OnValueChanged', function(_, _, val)
+    conf.ui.fullAlphaInCombat = val
+    o:SendMessage(ns:msg('OnBarOptionsChanged'), o.barIndex)
+  end)
+  tab:AddChild(chkFullAlphaInCombat)
+  refs.chkFullAlphaInCombat = chkFullAlphaInCombat
+  local chkFullAlphaInCombatSpacer = cns:spacer()
+  chkFullAlphaInCombatSpacer:SetRelativeWidth(0.35)
+  tab:AddChild(chkFullAlphaInCombatSpacer)
+
+  --- @type AceGUICheckBox
+  local chkFullAlphaWithTarget = AceGUI:Create('CheckBox')
+  chkFullAlphaWithTarget:SetLabel(L['Full Alpha with Target'])
+  chkFullAlphaWithTarget:SetRelativeWidth(0.65)
+  chkFullAlphaWithTarget:SetValue(conf.ui.fullAlphaWithTarget == true)
+  chkFullAlphaWithTarget:SetCallback('OnValueChanged', function(_, _, val)
+    conf.ui.fullAlphaWithTarget = val
+    o:SendMessage(ns:msg('OnBarOptionsChanged'), o.barIndex)
+  end)
+  tab:AddChild(chkFullAlphaWithTarget)
+  refs.chkFullAlphaWithTarget = chkFullAlphaWithTarget
+  local chkFullAlphaWithTargetSpacer = cns:spacer()
+  chkFullAlphaWithTargetSpacer:SetRelativeWidth(0.35)
+  tab:AddChild(chkFullAlphaWithTargetSpacer)
+
   return refs
 end
 

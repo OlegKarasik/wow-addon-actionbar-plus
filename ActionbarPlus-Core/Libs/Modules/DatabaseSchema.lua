@@ -97,6 +97,8 @@ Type Definitions
 --- @field layout string        -- 'grid' | 'arc' -- Active bar layout implementation
 --- @field layoutConfig LayoutConfigMap_ABP_2_0    -- Per-layout config, isolated by layout key
 --- @field alpha number
+--- @field fullAlphaInCombat boolean
+--- @field fullAlphaWithTarget boolean
 --- @field showEmptyButtons boolean
 --- @field frameHandleMouseover boolean
 --- @field frameHandleAlpha number
@@ -256,6 +258,8 @@ local DEFAULT_BAR = {
       arc = { buttonCount = 7, arcDirection = 'up', arcSpan = 90, extraButtonSpacing = 6 },
     },
     alpha = 1.0,
+    fullAlphaInCombat = false,
+    fullAlphaWithTarget = false,
     showEmptyButtons = true,
     frameHandleMouseover = false,
     frameHandleAlpha = 1.0,
